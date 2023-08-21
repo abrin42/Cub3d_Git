@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:16:29 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/21 08:56:02 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/22 00:17:21 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	set_map_data(t_data *data, char *buff, int info, int fd)
 {
+	(void)data;
+	(void)buff;
+	(void)info;
+	(void)fd;
 
 }
 
@@ -33,7 +37,7 @@ void	malloc_map(t_data *data, int fd, char *buff)
 		}
 		//free(buff); ce free fait la ligne en trop
 	}
-	data->map_info->map = malloc(sizeof(char *) * data->y_mallocc_map);
+	data->map_info->map = gc_malloc(&data->gc ,sizeof(char *) * data->y_mallocc_map);
 	while (y < data->y_mallocc_map)
 	{
 		data->map_info->map[y] = malloc(sizeof(char) * data->x_malloc_map + 1);

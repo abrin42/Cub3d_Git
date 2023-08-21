@@ -1,29 +1,29 @@
-
-SRCS	=	cub3d.c									\
+SRC_C	=	cub3d.c									\
 			parsing/get_map.c						\
 			utils/utils.c							\
 			utils/get_next_line.c					\
 
-SRC_H = cub3d.h
+LIBX = minilibx-linux/libmlx_Linux.a -lXext -lX11
+
+OBJS	=	${SRC_C:.c=.o}
 
 LIBGCDIR = gc
 LIBGC = libgc.a
 LIBGCFLAGS = -L $(LIBGCDIR) -l:$(LIBGC)
 
-OBJS	=	${SRC:.c=.o}
-
 NAME	=	cub3d
 
-CFLAGS	=	-g3 #-fsanitize=adresse
-# CFLAGS	=	-Wall -Wextra -Werror -g3 #-fsanitize=adresse
+CFLAGS	= -Wall -Wextra -Werror -g3
+
+CC	=	gcc
 
 all : ${NAME}
 
 $(LIBGCDIR)/$(LIBGC):
 	make -C $(LIBGCDIR)
 
-$(NAME): $(SRCS) $(LIBGCDIR)/$(LIBGC)
-	$(CC) $(CFLAGS) $(SRCS) -o $(NAME) $(LIBGCFLAGS) -lreadline
+$(NAME): $(OBJS) $(LIBGCDIR)/$(LIBGC)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBX) $(LIBGCFLAGS) -o $(NAME)
 
 clean :
 	rm -f ${OBJS}

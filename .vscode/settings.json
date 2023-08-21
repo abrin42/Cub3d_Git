@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"mlx.h": "c",
+		"wait.h": "c",
+		"history.h": "c"
+	}
+}
