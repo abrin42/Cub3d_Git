@@ -5,7 +5,7 @@ SRC_C	=	cub3d.c									\
 			utils/get_next_line.c					\
 			raycasting/display.c
 
-LIBX = minilibx-linux/libmlx_Linux.a -lXext -lX11
+LIBX = minilibx-linux/libmlx_Linux.a -lXext -lX11 -lm
 
 OBJS	=	${SRC_C:.c=.o}
 

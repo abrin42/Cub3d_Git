@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:00:15 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/22 04:53:19 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/22 08:29:26 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	init(t_data *data)
 {
-	data->x_malloc_map = 0;
-	data->y_mallocc_map = 0;
-	data->map_info = gc_malloc(&data->gc, sizeof(t_map));
+	data->x_map = 0;
+	data->y_map = 0;
+	data->map_i = gc_malloc(&data->gc, sizeof(t_map));
 	data->ray_i = gc_malloc(&data->gc, sizeof(t_ray));
 	data->mlx_i = gc_malloc(&data->gc, sizeof(t_mlx));
-	data->map_info->x_wall = 0;
-	data->map_info->y_wall = 1;
-	data->map_info->map_error = 0;
+	data->map_i->x_wall = 0;
+	data->map_i->y_wall = 1;
+	data->map_i->map_error = 0;
 }
 
 void	init_ray(t_data *data)
 {
-	data->ray_i->screen_w = data->x_malloc_map * 32;
-	data->ray_i->screen_h = data->y_mallocc_map * 32;
+	data->ray_i->screen_w = data->x_map * 32;
+	data->ray_i->screen_h = data->y_map * 32;
 	data->ray_i->dirX = -1;
 	data->ray_i->dirY = 0;
 	data->ray_i->planeX = 0;
@@ -68,9 +68,9 @@ int main(int argc, char **argv)
 	data.mlx_i->mlx = mlx_init();
 	data.mlx_i->mlx_win = mlx_new_window(data.mlx_i->mlx, data.ray_i->screen_w, data.ray_i->screen_h, "cub3d");
 	display(&data);
-	for (int i = 0; i < data.y_mallocc_map; i++)
+	for (int i = 0; i < data.y_map; i++)
 	{
-		printf("%s\n", data.map_info->map[i]);
+		printf("%s\n", data.map_i->map[i]);
 	}
 
 	mlx_key_hook(data.mlx_i->mlx_win, &handle_input, &data);

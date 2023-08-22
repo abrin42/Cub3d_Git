@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:16:29 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/22 07:51:22 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/22 09:20:22 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	set_map_data(t_data *data, char *buff, int info, int fd)
 {
 	(void)fd;
 	if (info == 1)
-		data->map_info->NO = ft_strdup(ft_strstr(buff, "./"));
+		data->map_i->NO = ft_strdup(ft_strstr(buff, "./"));
 	else if (info == 2)
-		data->map_info->SO = ft_strdup(ft_strstr(buff, "./"));
+		data->map_i->SO = ft_strdup(ft_strstr(buff, "./"));
 	else if (info == 3)
-		data->map_info->WE = ft_strdup(ft_strstr(buff, "./"));
+		data->map_i->WE = ft_strdup(ft_strstr(buff, "./"));
 	else if (info == 4)
-		data->map_info->EA = ft_strdup(ft_strstr(buff, "./"));
+		data->map_i->EA = ft_strdup(ft_strstr(buff, "./"));
 	/*else if (info == 5)
 		//
 	else if (info == 6)*/
@@ -49,16 +49,15 @@ void	malloc_map(t_data *data, int fd, char *buff)
 		buff = get_next_line(fd);
 		if (buff != NULL)
 		{
-			data->y_mallocc_map++;
-			if (ft_strlen(buff) > data->x_malloc_map)
-				data->x_malloc_map = ft_strlen(buff);
+			data->y_map++;
+			if (ft_strlen(buff) > data->x_map)
+				data->x_map = ft_strlen(buff);
 		}
 	}
-	data->map_info->map = gc_malloc(&data->gc ,sizeof(char *) * data->y_mallocc_map);
-	while (y < data->y_mallocc_map)
+	data->map_i->map = gc_malloc(&data->gc ,sizeof(char *) * data->y_map);
+	while (y < data->y_map)
 	{
-		data->map_info->map[y] =gc_malloc(&data->gc, sizeof(char) * data->x_malloc_map + 1);
-		//data->map_info->map[y][data->y_mallocc_map] = '\0';
+		data->map_i->map[y] =gc_malloc(&data->gc, sizeof(char) * data->x_map + 1);
 		y++;
 	}
 }
@@ -76,8 +75,8 @@ void	open_malloc_map(t_data *data)
 		buff = get_next_line(fd);
 		if (ft_strstr(buff, "1111") != 0)
 		{
-			data->y_mallocc_map++;
-			data->x_malloc_map = ft_strlen(buff);
+			data->y_map++;
+			data->x_map = ft_strlen(buff);
 			malloc_map(data, fd, buff);
 		}
 		i++;
@@ -100,19 +99,19 @@ void	copy_other_line_map(t_data *data, int fd, char *buff)
 	int y;
 
 	y = 1;
-	while (y < data->y_mallocc_map)
+	while (y < data->y_map)
 	{
 		x = 0;
 		buff = get_next_line(fd);
 		if (!buff)
 			break;
-		while (buff[x] && x < data->x_malloc_map)
+		while (buff[x] && x < data->x_map)
 		{
 			check_character(data, buff[x], x, y);
-			data->map_info->map[y][x] = buff[x];
+			data->map_i->map[y][x] = buff[x];
 			x++;
 		}
-		data->map_info->map[y][x] = '\0';
+		data->map_i->map[y][x] = '\0';
 		y++;
 	}
 }
@@ -125,13 +124,12 @@ void	copy_first_line_map(t_data *data, char *buff, int fd)
 	y = 0;
 	x = 0;
 	open_malloc_map(data);
-	while (buff[x] && x < data->x_malloc_map)
+	while (buff[x] && x < data->x_map)
 	{
-		data->map_info->map[y][x] = buff[x];
+		data->map_i->map[y][x] = buff[x];
 		x++;
 	}
-	data->map_info->map[y][x] = '\0';
-	//printf("map =%s=\n",data->map_info->map[y]);
+	data->map_i->map[y][x] = '\0';
 	copy_other_line_map(data, fd , buff);
 
 
@@ -139,12 +137,6 @@ void	copy_first_line_map(t_data *data, char *buff, int fd)
 
 void	check_info(t_data *data, char *buff, int fd)
 {
-	//printf("buff =%s=\n", buff);
-	/*if (!buff[0])
-	{
-	//	printf("return\n");
-		return ;
-	}*/
 	if (ft_strncmp(buff, "NO", 2) == 0)
 		set_map_data(data, buff, 1, fd);
 	else if (ft_strncmp(buff, "SO", 2) == 0)
@@ -167,12 +159,10 @@ void transfert_map(t_data *data,int fd)
 	int i;
 
 	i = 0;
-	while (i == 0 || buff != NULL) //degeu autre moyen ?
+	while (i == 0 || buff != NULL)
 	{
 		buff = get_next_line(fd);
 		check_info(data, buff, fd);
-		//free (buff);
-	//printf("buff =%s=", buff);
 		i++;
 	}
 

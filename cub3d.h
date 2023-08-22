@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 19:35:25 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/22 06:33:54 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/22 08:29:27 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
-#include <math.h>
+# include <math.h>
 # include "gc/gc.h"
 # include "minilibx-linux/mlx.h"
 
@@ -52,10 +52,8 @@ typedef struct s_map
 	char	*EA;
 	int		*F;
 	int		*C;
-	int		x_wall;
-	int		y_wall;
-	int		x_wall_start;
-	int		y_wall_start;
+	int		x_wall;//start suprimer pas usse
+	int		y_wall; //start suprimer pas usse
 	int		map_error;
 	int			cell_color;
 	int			floor_color;
@@ -106,13 +104,13 @@ typedef struct s_ray
 typedef struct s_data
 {
 	char *path_map;
-	int x_malloc_map;
-	int y_mallocc_map;
+	int x_map;
+	int y_map;
 
 	t_gcan	gc;
 	t_ray	*ray_i;
 	t_mlx *mlx_i;
-	t_map *map_info;
+	t_map *map_i;
 }	t_data;
 
 

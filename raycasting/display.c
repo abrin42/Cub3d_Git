@@ -20,14 +20,14 @@ void	draw_map2D(t_data *data)
 	int	h;
 
 	x = 0;
-	while (x < data->x_malloc_map)
+	while (x < data->x_map)
 	{
 		y = 0;
-		while (y < data->y_mallocc_map)
+		while (y < data->y_map)
 		{
-			if (data->map_info->map[y][x] == '1')
+			if (data->map_i->map[y][x] == '1')
 				data->mlx_i->img = mlx_xpm_file_to_image (data->mlx_i->mlx, "img/white.xpm", &w, &h);
-			else if (data->map_info->map[y][x] == '0')
+			else if (data->map_i->map[y][x] == '0')
 				data->mlx_i->img = mlx_xpm_file_to_image (data->mlx_i->mlx, "img/grey.xpm", &w, &h);
 			my_mlx_put(data, y, x);
 			y++;
@@ -51,6 +51,7 @@ static void	setup_dda2(t_data *data)
 
 void	setup_dda(t_data *data)
 {
+	setup_dda2(data);
 	if (data->ray_i->rayDirX < 0)
 	{
 		data->ray_i->stepX = -1;
@@ -77,6 +78,7 @@ t_texture	*dda(t_data *data)
 {
 	t_texture	*text;
 
+	text = NULL;
 	while (text == NULL)
 	{
 		if (data->ray_i->sideDistX < data->ray_i->sideDistY)
@@ -139,7 +141,7 @@ void	vertical_line(int x, int line_height, t_texture *text, int textX, t_data *d
 	y = 0;
 	step = ((double)(text->height) / (double)(draw_end - draw_start));
 	while (y < draw_start)
-		img_pix_put(x, y++, data->map_info->cell_color, data);
+		img_pix_put(x, y++, data->map_i->cell_color, data);
 	textY = 0.0;
 	while (y < draw_end)
 	{
@@ -147,7 +149,7 @@ void	vertical_line(int x, int line_height, t_texture *text, int textX, t_data *d
 		textY += step;
 	}
 	while (y < data->ray_i->screen_h)
-		img_pix_put(x, y++,  data->map_info->floor_color, data);
+		img_pix_put(x, y++,  data->map_i->floor_color, data);
 }
 
 static void render_line(t_data *data, int x)
@@ -202,7 +204,5 @@ int	display(void *param)
 		data->ray_i->drawStart = 0;
 	data->ray_i->drawEnd = data->ray_i->lineHeight / 2 + data->ray_i->screen_h / 2;
 	if (data->ray_i->drawEnd >= data->ray_i->screen_h)
-		data->ray_i->drawEnd = h - 1;
-
-
+		data->ray_i->drawEnd = data->ray_i->screen_h - 1;
 }
