@@ -6,7 +6,7 @@
 /*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:16:29 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/22 00:17:21 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/22 07:51:22 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,15 @@ void	open_malloc_map(t_data *data)
 	close(fd);
 }
 
+void	check_character(t_data *data, char pos, int x, int y)
+{
+	if (pos == 'N' || pos == 'S' || pos == 'E' || pos == 'O')
+	{
+		data->ray_i->posX = x;
+		data->ray_i->posY = y;
+	}
+}
+
 void	copy_other_line_map(t_data *data, int fd, char *buff)
 {
 	int x;
@@ -81,6 +90,7 @@ void	copy_other_line_map(t_data *data, int fd, char *buff)
 		buff = get_next_line(fd);
 		while (buff[x] && x < data->x_malloc_map)
 		{
+			check_character(data, buff[x], x, y);
 			data->map_info->map[y][x] = buff[x];
 			x++;
 		}

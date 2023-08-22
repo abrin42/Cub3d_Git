@@ -2,6 +2,7 @@ SRC_C	=	cub3d.c									\
 			parsing/get_map.c						\
 			utils/utils.c							\
 			utils/get_next_line.c					\
+			raycasting/display.c
 
 LIBX = minilibx-linux/libmlx_Linux.a -lXext -lX11
 

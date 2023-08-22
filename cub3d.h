@@ -6,7 +6,7 @@
 /*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 19:35:25 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/22 00:24:19 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/22 06:33:54 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
+#include <math.h>
 # include "gc/gc.h"
 # include "minilibx-linux/mlx.h"
 
@@ -30,19 +31,64 @@
 #  define BUFFER_SIZE 1
 # endif
 
+typedef struct s_texture
+{
+	void	*img;
+	int		width;
+	int		height;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_texture;
+
 typedef struct s_map
 {
 	char **map;
+	int			cell_color;
+	int			floor_color;
 }	t_map;
 
 typedef struct s_mlx
 {
 	void	*mlx;
 	void	*mlx_win;
+	void	*img;
+	char		*img_addr;
+	int			bpp;
+	int			line_len;
+	int			endian;
 }	t_mlx;
 
 typedef struct s_ray
 {
+	int		screen_w;
+	int		screen_h;
+	double	posX;
+	double	posY;
+	int		mapX;
+	int		mapY;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	int		stepX;
+	int		stepY;
+	int		hit;
+	int		side;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	double	dirX;
+	double	dirY;
+	double	rayDirX;
+	double	rayDirY;
+	double	planeX;
+	double	planeY;
+	double	cameraX;
+	double	time;
+	double	oldTime;
 }	t_ray;
 
 typedef struct s_data
@@ -74,5 +120,7 @@ char		*get_next_line(int fd);
 /*********PARSING***********************************/
 void		get_map(t_data *data, char *argv);
 
+/*********RAYTRACING***********************************/
+int	display(void *param);
 
 #endif
