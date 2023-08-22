@@ -1,5 +1,6 @@
 SRC_C	=	cub3d.c									\
 			parsing/get_map.c						\
+			parsing/check_border.c					\
 			utils/utils.c							\
 			utils/get_next_line.c					\
 			raycasting/display.c

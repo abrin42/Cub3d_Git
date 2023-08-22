@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:00:15 by abrin             #+#    #+#             */
 /*   Updated: 2023/08/22 04:53:19 by tmarie           ###   ########.fr       */
@@ -19,6 +19,9 @@ void	init(t_data *data)
 	data->map_info = gc_malloc(&data->gc, sizeof(t_map));
 	data->ray_i = gc_malloc(&data->gc, sizeof(t_ray));
 	data->mlx_i = gc_malloc(&data->gc, sizeof(t_mlx));
+	data->map_info->x_wall = 0;
+	data->map_info->y_wall = 1;
+	data->map_info->map_error = 0;
 }
 
 void	init_ray(t_data *data)
@@ -61,6 +64,7 @@ int main(int argc, char **argv)
 	get_map(&data, argv[1]);
 	init_ray(&data);
 	printf("ICI W : %d et H : %d\n", data.ray_i->screen_w, data.ray_i->screen_h);
+	check_border_map(&data);
 	data.mlx_i->mlx = mlx_init();
 	data.mlx_i->mlx_win = mlx_new_window(data.mlx_i->mlx, data.ray_i->screen_w, data.ray_i->screen_h, "cub3d");
 	display(&data);

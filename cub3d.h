@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 19:35:25 by abrin             #+#    #+#             */
 /*   Updated: 2023/08/22 06:33:54 by tmarie           ###   ########.fr       */
@@ -44,7 +44,19 @@ typedef struct s_texture
 
 typedef struct s_map
 {
-	char **map;
+	char	**map;
+	char	**copy_map;
+	char	*NO;
+	char	*SO;
+	char	*WE;
+	char	*EA;
+	int		*F;
+	int		*C;
+	int		x_wall;
+	int		y_wall;
+	int		x_wall_start;
+	int		y_wall_start;
+	int		map_error;
 	int			cell_color;
 	int			floor_color;
 }	t_map;
@@ -110,17 +122,28 @@ typedef struct s_data
 
 /***********UTILS***********************************/
 
-int		ft_strlen(char *str);
+int			ft_strlen(char *str);
 int			ft_strchr(char *string);
 int			ft_strncmp(char *str1, char *str2, int length);
-char		*ft_strnstr(char *big, char *lit, size_t len);
+//char		*ft_strnstr(char *big, char *lit, size_t len);
+char		*ft_strstr(char *big, char *lit);
+
 char		*ft_strdup(const char *s);
+char		*ft_strdup_special(const char *s);
+
 char		*get_next_line(int fd);
 
 /*********PARSING***********************************/
 void		get_map(t_data *data, char *argv);
+int			check_border_map(t_data *data);
 
+void	check_right(t_data *data);
+void	check_down(t_data *data);
+void	check_left(t_data *data);
+void	check_up(t_data *data);
 /*********RAYTRACING***********************************/
 int	display(void *param);
+
+
 
 #endif
