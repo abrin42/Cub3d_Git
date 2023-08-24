@@ -6,37 +6,77 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:16:29 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/22 09:20:22 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/25 00:25:07 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-/*
-void	set_texture(t_data *data, char *buff)
-{
 
-}*/
+void	set_texture_c(t_data *data, char *buff)
+{
+	int i;
+	int j;
+
+	j = 0;
+	i = 0;
+	data->map_i->C = gc_malloc(&data->gc, sizeof(int) * 3);
+	while(i < 3)
+	{
+		data->map_i->C[i] = 0;
+		while(buff[j] && buff[j] != ',')
+		{
+			if (ft_isdigit(buff[j]) == 1)
+			{
+				data->map_i->C[i] *= 10;
+				data->map_i->C[i] += (buff[j] - 48);
+			}
+			j++;
+		}
+		j++;
+		i++;
+	}
+}
+
+void	set_texture_f(t_data *data, char *buff)
+{
+	int i;
+	int j;
+
+	j = 0;
+	i = 0;
+	data->map_i->F = gc_malloc(&data->gc, sizeof(int) * 3);
+	while(i < 3)
+	{
+		data->map_i->F[i] = 0;
+		while(buff[j] && buff[j] != ',')
+		{
+			if (ft_isdigit(buff[j]) == 1)
+			{
+				data->map_i->F[i] *= 10;
+				data->map_i->F[i] += (buff[j] - 48);
+			}
+			j++;
+		}
+		j++;
+		i++;
+	}
+}
 
 void	set_map_data(t_data *data, char *buff, int info, int fd)
 {
 	(void)fd;
 	if (info == 1)
-		data->map_i->NO = ft_strdup(ft_strstr(buff, "./"));
+		data->map_i->NO = ft_strdup(data, ft_strstr(buff, "./"));
 	else if (info == 2)
-		data->map_i->SO = ft_strdup(ft_strstr(buff, "./"));
+		data->map_i->SO = ft_strdup(data, ft_strstr(buff, "./"));
 	else if (info == 3)
-		data->map_i->WE = ft_strdup(ft_strstr(buff, "./"));
+		data->map_i->WE = ft_strdup(data, ft_strstr(buff, "./"));
 	else if (info == 4)
-		data->map_i->EA = ft_strdup(ft_strstr(buff, "./"));
-	/*else if (info == 5)
-		//
-	else if (info == 6)*/
-		//
-
-	/*else if (ft_strncmp(buff, "F", 2))
-		set_map_data(data, buff, 5, fd);
-	else if (ft_strncmp(buff, "C", 2))
-		set_map_data(data, buff, 6, fd);*/
+		data->map_i->EA = ft_strdup(data, ft_strstr(buff, "./"));
+	else if (info == 5)
+		set_texture_f(data, buff);
+	else if (info == 6)
+		set_texture_c(data, buff);
 }
 
 void	malloc_map(t_data *data, int fd, char *buff)
@@ -176,10 +216,10 @@ void	get_map(t_data *data, char *argv)
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
 	{
-		printf("Error\npour executer le programe utiliser une map");
+		printf("Error : to run the program use a map.cub\n");
 		exit(0);
 	}
-	data->path_map = ft_strdup(argv);
+	data->path_map = ft_strdup(data, argv);
 	transfert_map(data, fd);
 	close(fd);
 }
