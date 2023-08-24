@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 19:35:25 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/22 08:29:27 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/25 00:48:37 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,15 +125,20 @@ int			ft_strchr(char *string);
 int			ft_strncmp(char *str1, char *str2, int length);
 //char		*ft_strnstr(char *big, char *lit, size_t len);
 char		*ft_strstr(char *big, char *lit);
+int			ft_isdigit(int c);
 
-char		*ft_strdup(const char *s);
-char		*ft_strdup_special(const char *s);
+
+char		*ft_strdup(t_data *data, const char *s);
+char		*ft_strdup_special(t_data *data ,const char *s);
 
 char		*get_next_line(int fd);
 
 /*********PARSING***********************************/
 void		get_map(t_data *data, char *argv);
 int			check_border_map(t_data *data);
+int			check_player(t_data *data);
+int			check_error(t_data *data, char *argv);
+
 
 void	check_right(t_data *data);
 void	check_down(t_data *data);

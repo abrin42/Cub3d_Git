@@ -6,11 +6,20 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 04:07:37 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/22 06:24:28 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/24 23:21:00 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
 
 int	ft_strlen(char *str)
 {
@@ -113,7 +122,7 @@ int	ft_strncmp(char *str1, char *str2, int length)
 		return (str1[i] - str2[i]);
 }
 
-char	*ft_strdup_special(const char *s)
+char	*ft_strdup_special(t_data *data ,const char *s)
 {
 	int		i;
 	int		j;
@@ -125,7 +134,7 @@ char	*ft_strdup_special(const char *s)
 	j = 1;
 	while (s[len])
 		len++;
-	dst = malloc (sizeof(char) * len + 3);
+	dst = gc_malloc(&data->gc,sizeof(char) * len + 3);
 	if (dst == 0)
 		return (NULL);
 	dst[0] = '4';
@@ -138,7 +147,7 @@ char	*ft_strdup_special(const char *s)
 	return (dst);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(t_data *data,const char *s)
 {
 	int		i;
 	char	*dst;
@@ -148,7 +157,7 @@ char	*ft_strdup(const char *s)
 	i = 0;
 	while (s[len])
 		len++;
-	dst = malloc (sizeof(char) * len + 1);
+	dst = gc_malloc (&data->gc, sizeof(char) * len + 1);
 	if (dst == 0)
 		return (NULL);
 	while (s[i] != '\0')
