@@ -61,19 +61,16 @@ int main(int argc, char **argv)
 	(void)argc;
 	gc_init(&data.gc);
 	init(&data);
+	data.mlx_i->mlx = mlx_init();
 	get_map(&data, argv[1]);
 	init_ray(&data);
-	//printf("ICI W : %d et H : %d\n", data.ray_i->screen_w, data.ray_i->screen_h);
+	printf("ICI W : %d et H : %d\n", data.ray_i->screen_w, data.ray_i->screen_h);
+	setup_texture(&data);
+	data.mlx_i->mlx_win = mlx_new_window(data.mlx_i->mlx, data.ray_i->screen_w, data.ray_i->screen_h, "cub3d");
+	data.mlx_i->img = mlx_new_image(data.mlx_i->mlx, data.ray_i->screen_w, data.ray_i->screen_h);
+	data.mlx_i->img_addr = mlx_get_data_addr(data.mlx_i->img, &(data.mlx_i->bpp), &(data.mlx_i->line_len), &(data.mlx_i->endian));
 	if (check_error(&data, argv[1]) == 1)
 		return(-1);
-	for (int i = 0; i < data.y_map; i++)
-	{
-		printf("%s-\n", data.map_i->map[i]);
-	}
-	/*data.mlx_i->mlx = mlx_init();
-	data.mlx_i->mlx_win = mlx_new_window(data.mlx_i->mlx, data.ray_i->screen_w, data.ray_i->screen_h, "cub3d");
-	display(&data);
-
 	mlx_key_hook(data.mlx_i->mlx_win, &handle_input, &data);
 	mlx_hook(data.mlx_i->mlx_win, 17, 1L << 0, handle_mouse, &data);
 	mlx_expose_hook(data.mlx_i->mlx_win, display, &data);

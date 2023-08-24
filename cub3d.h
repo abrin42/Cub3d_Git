@@ -34,9 +34,9 @@
 typedef struct s_texture
 {
 	void	*img;
+	char	*addr;
 	int		width;
 	int		height;
-	char	*addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
@@ -50,6 +50,10 @@ typedef struct s_map
 	char	*SO;
 	char	*WE;
 	char	*EA;
+	t_texture	no;
+	t_texture	so;
+	t_texture	we;
+	t_texture	ea;
 	int		*F;
 	int		*C;
 	int		x_wall;//start suprimer pas usse
@@ -64,10 +68,10 @@ typedef struct s_mlx
 	void	*mlx;
 	void	*mlx_win;
 	void	*img;
-	char		*img_addr;
-	int			bpp;
-	int			line_len;
-	int			endian;
+	char	*img_addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
 }	t_mlx;
 
 typedef struct s_ray
@@ -138,6 +142,7 @@ void		get_map(t_data *data, char *argv);
 int			check_border_map(t_data *data);
 int			check_player(t_data *data);
 int			check_error(t_data *data, char *argv);
+void		setup_texture(t_data *data);
 
 
 void	check_right(t_data *data);
@@ -145,7 +150,7 @@ void	check_down(t_data *data);
 void	check_left(t_data *data);
 void	check_up(t_data *data);
 /*********RAYTRACING***********************************/
-int	display(void *param);
+int	display(t_data *data);
 
 
 

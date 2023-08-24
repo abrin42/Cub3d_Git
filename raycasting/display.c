@@ -172,15 +172,11 @@ static void render_line(t_data *data, int x)
 	vertical_line(x, (int)(data->ray_i->screen_h / data->ray_i->perpWallDist), text, textX, data);
 }
 
-int	display(void *param)
+int	display(t_data *data)
 {
 	int	x;
-	t_data	*data;
 
 	x = 0;
-	data = param;
-	//draw_map2D(data);
-	//draw_player(data);
 	while (x < data->ray_i->screen_w)
 	{
 		data->ray_i->cameraX = (2 * (x / (double)data->ray_i->screen_w)) - 1;
@@ -194,15 +190,21 @@ int	display(void *param)
 	}
 	mlx_put_image_to_window(data->mlx_i->mlx, data->mlx_i->mlx_win, data->mlx_i->img, 0, 0);
 	return (0);
+}
 
+void	setup_texture2(t_data *data)
+{
+	data->map_i->no.img = mlx_xpm_file_to_image(data->mlx_i->mlx, data->map_i->NO, &(data->map_i->no.width), &(data->map_i->no.height));
+	data->map_i->no.addr = mlx_get_data_addr(data->map_i->no.img, &(data->map_i->no.bpp), &(data->map_i->no.line_len), &(data->map_i->no.endian));
+	data->map_i->so.img = mlx_xpm_file_to_image(data->mlx_i->mlx, data->map_i->SO, &(data->map_i->so.width), &(data->map_i->so.height));
+	data->map_i->so.addr = mlx_get_data_addr(data->map_i->so.img, &(data->map_i->so.bpp), &(data->map_i->so.line_len), &(data->map_i->so.endian));
+	data->map_i->we.img = mlx_xpm_file_to_image(data->mlx_i->mlx, data->map_i->WE, &(data->map_i->we.width), &(data->map_i->we.height));
+	data->map_i->we.addr = mlx_get_data_addr(data->map_i->we.img, &(data->map_i->we.bpp), &(data->map_i->we.line_len), &(data->map_i->we.endian));
+	data->map_i->ea.img = mlx_xpm_file_to_image(data->mlx_i->mlx, data->map_i->EA, &(data->map_i->ea.width), &(data->map_i->ea.height));
+	data->map_i->ea.addr = mlx_get_data_addr(data->map_i->ea.img, &(data->map_i->ea.bpp), &(data->map_i->ea.line_len), &(data->map_i->ea.endian));
+}
 
-	//Calculate height of line to draw on screen
-	data->ray_i->lineHeight = (int)(data->ray_i->screen_h / data->ray_i->perpWallDist);
-	//calculate lowest and highest pixel to fill in current stripe
-	data->ray_i->drawStart = -data->ray_i->lineHeight / 2 + data->ray_i->screen_h / 2;
-	if (data->ray_i->drawStart < 0)
-		data->ray_i->drawStart = 0;
-	data->ray_i->drawEnd = data->ray_i->lineHeight / 2 + data->ray_i->screen_h / 2;
-	if (data->ray_i->drawEnd >= data->ray_i->screen_h)
-		data->ray_i->drawEnd = data->ray_i->screen_h - 1;
+void	setup_texture(t_data *data)
+{
+	setup_texture2(data);
 }

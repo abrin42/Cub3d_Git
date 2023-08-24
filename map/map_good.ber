@@ -1,7 +1,7 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./texture/Bricks_03-128x128.xpm
+SO ./texture/Wood_15-128x128.xpm
+WE ./texture/Bricks_17-128x128.xpm
+EA ./texture/Tile_13-128x128.xpm
 F 220,100,0
 C 225,30,0
 
