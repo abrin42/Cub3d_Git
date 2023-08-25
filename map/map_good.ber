@@ -2,6 +2,7 @@ NO ./texture/Bricks_03-128x128.xpm
 SO ./texture/Wood_15-128x128.xpm
 WE ./texture/Bricks_17-128x128.xpm
 EA ./texture/Tile_13-128x128.xpm
+
 F 220,100,0
 C 225,30,0
 
