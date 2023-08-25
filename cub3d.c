@@ -6,7 +6,7 @@
 /*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:00:15 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/25 00:50:57 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/25 03:56:22 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,16 @@ int main(int argc, char **argv)
 	init(&data);
 	data.mlx_i->mlx = mlx_init();
 	get_map(&data, argv[1]);
+	//if (check_error(&data, argv[1]) == 1)
+	//	return(-1);
 	init_ray(&data);
 	printf("ICI W : %d et H : %d\n", data.ray_i->screen_w, data.ray_i->screen_h);
 	setup_texture(&data);
 	data.mlx_i->mlx_win = mlx_new_window(data.mlx_i->mlx, data.ray_i->screen_w, data.ray_i->screen_h, "cub3d");
 	data.mlx_i->img = mlx_new_image(data.mlx_i->mlx, data.ray_i->screen_w, data.ray_i->screen_h);
 	data.mlx_i->img_addr = mlx_get_data_addr(data.mlx_i->img, &(data.mlx_i->bpp), &(data.mlx_i->line_len), &(data.mlx_i->endian));
-	if (check_error(&data, argv[1]) == 1)
-		return(-1);
 	mlx_key_hook(data.mlx_i->mlx_win, &handle_input, &data);
 	mlx_hook(data.mlx_i->mlx_win, 17, 1L << 0, handle_mouse, &data);
 	mlx_expose_hook(data.mlx_i->mlx_win, display, &data);
-	mlx_loop(data.mlx_i->mlx);*/
+	mlx_loop(data.mlx_i->mlx);
 }

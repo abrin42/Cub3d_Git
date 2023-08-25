@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_border.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 03:36:14 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/25 00:30:37 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/25 02:03:52 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ void	check_up(t_data *data)
 
 int	check_border_map(t_data *data)
 {
-
 	malloc_copy_map(data);
 	copy_map(data);
 	data->map_i->x_wall = data->ray_i->posX;
