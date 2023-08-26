@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:16:29 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/26 02:22:49 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/26 02:45:19 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void	copy_other_line_map(t_data *data, int fd, char *buff)
 	{
 		x = 0;
 		buff = get_next_line(fd);
-		printf("buff fee%s\n",buff);
+		//printf("buff fee%s\n",buff);
 		if (!buff)
 		{
 			printf("break here\n");
