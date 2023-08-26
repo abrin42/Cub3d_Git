@@ -6,7 +6,7 @@
 /*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 03:36:14 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/26 07:09:08 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/26 23:09:14 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	malloc_copy_map(t_data *data)
 	data->map_i->copy_map = gc_malloc(&data->gc ,sizeof(char *) * data->y_map + 3);
 	while (y < data->y_map + 1)
 	{
-		data->map_i->copy_map[y] =gc_malloc(&data->gc, sizeof(char) * data->x_map + 2);
+		data->map_i->copy_map[y] = gc_malloc(&data->gc, sizeof(char) * data->x_map + 2);
 		y++;
 	}
 }

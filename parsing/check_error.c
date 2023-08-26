@@ -14,31 +14,32 @@ int	is_players(char c)
 	return(0);
 }
 
-int	check_player(t_data *data)
+int    check_player(t_data *data)
 {
-	int y;
-	int x;
-	int player;
+    int y;
+    int x;
+    int player;
 
-	player = 0;
-	y = 0;
-	while (y < data->y_map - 1)
-	{
-		x = 0;
-		while (x < data->x_map)
-		{
-			if (is_players(data->map_i->map[y][x]) == 1)
-			{
-				data->map_i->map[y][x] = '0';
-				player++;
-			}
-			x++;
-		}
-		y++;
-	}
-	return(player);
+    player = 0;
+    y = 0;
+    while (y < data->y_map - 1)
+    {
+        x = 0;
+        while (data->map_i->map[y][x] && x < data->x_map)
+        {
+            if (data->map_i->map[y][x] && is_players(data->map_i->map[y][x]) == 1)
+            {
+                data->map_i->map[y][x] = '0';
+                player++;
+            }
+            x++;
+        }
+        y++;
+    }
+    return(player);
 
 }
+
 int	check_texture(t_data *data)
 {
 	int error;
