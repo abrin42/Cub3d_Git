@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:00:15 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/25 03:56:22 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/25 22:15:59 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init(t_data *data)
 	data->map_i->x_wall = 0;
 	data->map_i->y_wall = 1;
 	data->map_i->map_error = 0;
+	data->map_i->trace = 0;
 }
 
 void	init_ray(t_data *data)
@@ -49,6 +50,7 @@ int	handle_input(int key, t_data *data)
 	if (key == 65307)
 	{
 		mlx_destroy_window(data->mlx_i->mlx, data->mlx_i->mlx_win);
+		gc_clean(&data->gc);
 		exit(0);
 	}
 	return (0);
@@ -63,8 +65,13 @@ int main(int argc, char **argv)
 	init(&data);
 	data.mlx_i->mlx = mlx_init();
 	get_map(&data, argv[1]);
-	//if (check_error(&data, argv[1]) == 1)
-	//	return(-1);
+	if (check_error(&data, argv[1]) == 1)
+		return(-1);
+	for (size_t i = 0; i < 13; i++)
+	{
+		printf("%s-*\n", data.map_i->map[i]);
+	}
+
 	init_ray(&data);
 	printf("ICI W : %d et H : %d\n", data.ray_i->screen_w, data.ray_i->screen_h);
 	setup_texture(&data);
@@ -72,7 +79,7 @@ int main(int argc, char **argv)
 	data.mlx_i->img = mlx_new_image(data.mlx_i->mlx, data.ray_i->screen_w, data.ray_i->screen_h);
 	data.mlx_i->img_addr = mlx_get_data_addr(data.mlx_i->img, &(data.mlx_i->bpp), &(data.mlx_i->line_len), &(data.mlx_i->endian));
 	mlx_key_hook(data.mlx_i->mlx_win, &handle_input, &data);
-	mlx_hook(data.mlx_i->mlx_win, 17, 1L << 0, handle_mouse, &data);
-	mlx_expose_hook(data.mlx_i->mlx_win, display, &data);
+	//mlx_hook(data.mlx_i->mlx_win, 17, 1L << 0, handle_mouse, &data);
+	//mlx_expose_hook(data.mlx_i->mlx_win, display, &data);
 	mlx_loop(data.mlx_i->mlx);
 }

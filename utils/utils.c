@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 04:07:37 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/24 23:21:00 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/25 04:43:07 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,32 @@ char	*ft_strdup_special(t_data *data ,const char *s)
 	dst[j] = '4';
 	dst[j + 1] = '\0';
 	return (dst);
+}
+
+int	ft_strnrchr(char *s, char  *c)
+{
+	int		i;
+	int		u;
+
+	u = 0;
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	while (i >= 0 && s[i] != c[u])
+	{
+		i--;
+		if (i < 0)
+			return (0);
+	}
+	while (s[i] && c[i])
+	{
+		if (s[i] == c[u])
+			u++;
+		i++;
+	}
+	if (u == ft_strlen(c))
+		return (1);
+	return(0);
 }
 
 char	*ft_strdup(t_data *data,const char *s)

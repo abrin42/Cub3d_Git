@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 19:35:25 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/25 00:48:37 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/25 07:46:53 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_map
 	int		map_error;
 	int			cell_color;
 	int			floor_color;
+	int			trace;
 }	t_map;
 
 typedef struct s_mlx
@@ -130,6 +131,8 @@ int			ft_strncmp(char *str1, char *str2, int length);
 //char		*ft_strnstr(char *big, char *lit, size_t len);
 char		*ft_strstr(char *big, char *lit);
 int			ft_isdigit(int c);
+int			ft_strnrchr(char *s, char  *c);
+
 
 
 char		*ft_strdup(t_data *data, const char *s);

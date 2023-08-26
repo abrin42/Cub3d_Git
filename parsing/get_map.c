@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:16:29 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/25 03:53:09 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/25 22:14:33 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,25 @@ void	malloc_map(t_data *data, int fd, char *buff)
 	while (buff != NULL)
 	{
 		buff = get_next_line(fd);
-		if (buff != NULL)
+		/*if (!buff[0])
 		{
-			data->y_map++;
-			if (ft_strlen(buff) > data->x_map)
-				data->x_map = ft_strlen(buff);
+			printf("this break\n");
+			break;
 		}
+		//printf("%s\n",buff);*/
+		if (ft_strstr(buff, "1") != 0)
+			data->y_map++;
+		if (ft_strlen(buff) > data->x_map)
+			data->x_map = ft_strlen(buff);
+		free(buff);
 	}
-	data->map_i->map = gc_malloc(&data->gc ,sizeof(char *) * data->y_map);
+	data->map_i->map = gc_malloc(&data->gc ,sizeof(char *) * data->y_map + 1);
 	while (y < data->y_map)
 	{
 		data->map_i->map[y] =gc_malloc(&data->gc, sizeof(char) * data->x_map + 1);
 		y++;
 	}
+	printf("y malloc %d, x malloc%d\n\n",data->y_map,data->x_map);
 }
 
 void	open_malloc_map(t_data *data)
@@ -113,14 +119,24 @@ void	open_malloc_map(t_data *data)
 	while (i == 0 || buff != NULL)
 	{
 		buff = get_next_line(fd);
+		//printf("\nbuff[%d]*%s*\n",i,buff);
 		if (ft_strstr(buff, "1111") != 0)
 		{
+			//printf("laaaa\n");
 			data->y_map++;
 			data->x_map = ft_strlen(buff);
 			malloc_map(data, fd, buff);
+			if (data->map_i->trace != 0)
+			{
+				free(buff);
+				break;
+			}
 		}
+		free(buff);
 		i++;
 	}
+	//write(1,"here**\n",7);
+	//printf("y malloc %d, x malloc%d\n\n",data->y_map,data->x_map);
 	close(fd);
 }
 
@@ -137,14 +153,20 @@ void	copy_other_line_map(t_data *data, int fd, char *buff)
 {
 	int x;
 	int y;
+	int y_2;
 
+	y_2 = 0;
 	y = 1;
-	while (y < data->y_map)
+	while (y < data->y_map + y_2)
 	{
 		x = 0;
 		buff = get_next_line(fd);
+		printf("buff fee%s\n",buff);
 		if (!buff)
+		{
+			printf("break here\n");
 			break;
+		}
 		while (buff[x] && x < data->x_map)
 		{
 			check_character(data, buff[x], x, y);
@@ -152,8 +174,17 @@ void	copy_other_line_map(t_data *data, int fd, char *buff)
 			x++;
 		}
 		data->map_i->map[y][x] = '\0';
-		y++;
+			//printf("%s-\n", data->map_i->map[y]);
+		if (ft_strstr(buff, "1") != 0)
+			y++;
+		else
+		{
+			y_2++;
+		}
+		free(buff);
 	}
+	printf("buff fee%s\n",buff);
+	//data->map_i->trace++;
 }
 
 void	copy_first_line_map(t_data *data, char *buff, int fd)
@@ -163,14 +194,17 @@ void	copy_first_line_map(t_data *data, char *buff, int fd)
 
 	y = 0;
 	x = 0;
-	open_malloc_map(data);
+	//open_malloc_map(data);
 	while (buff[x] && x < data->x_map)
 	{
 		data->map_i->map[y][x] = buff[x];
 		x++;
 	}
+	//printf("%s-\n", data->map_i->map[0]);
 	data->map_i->map[y][x] = '\0';
+	data->map_i->trace++;
 	copy_other_line_map(data, fd , buff);
+
 
 
 }
@@ -202,16 +236,30 @@ void transfert_map(t_data *data,int fd)
 	while (i == 0 || buff != NULL)
 	{
 		buff = get_next_line(fd);
+		if(!buff)
+		{
+			free(buff);
+			break;
+		}
 		check_info(data, buff, fd);
+		if (data->map_i->trace != 0)
+		{
+			free(buff);
+			break;
+		}
+		printf("next step \n");
 		i++;
-	}
+		free(buff);
 
+	}
 }
 
 void	get_map(t_data *data, char *argv)
 {
 	int	fd;
 
+	data->path_map = ft_strdup(data, argv);
+	open_malloc_map(data);
 	fd = 0;
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
@@ -219,7 +267,6 @@ void	get_map(t_data *data, char *argv)
 		printf("Error : to run the program use a map.cub\n");
 		exit(0);
 	}
-	data->path_map = ft_strdup(data, argv);
 	transfert_map(data, fd);
 	close(fd);
 }

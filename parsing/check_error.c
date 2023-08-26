@@ -82,6 +82,27 @@ int	check_name(char *argv)
 
 }
 
+int check_xpm(t_data *data)
+{
+	int error;
+
+	error = 0;
+	if (ft_strnrchr(data->map_i->NO, ".xpm") != 1)
+		error++;
+	if (ft_strnrchr(data->map_i->SO, ".xpm") != 1)
+		error++;
+	if (ft_strnrchr(data->map_i->EA, ".xpm") != 1)
+		error++;
+	if (ft_strnrchr(data->map_i->WE, ".xpm") != 1)
+		error++;
+	if (error != 0)
+	{
+		printf("Error : Textures must be in .xpm format\n");
+		return(1);
+	}
+	return (0);
+}
+
 int check_error(t_data *data, char *argv)
 {
 	if (check_border_map(data) == 1)
@@ -89,6 +110,8 @@ int check_error(t_data *data, char *argv)
 	if (check_texture(data) == 1)
 		return(1);
 	if (check_name(argv) == 1)
+		return(1);
+	if(check_xpm(data) == 1)
 		return(1);
 	return (0);
 }
