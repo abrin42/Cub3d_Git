@@ -6,7 +6,7 @@
 /*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 19:35:25 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/26 07:46:52 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/26 07:51:53 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int			ft_strnrchr(char *s, char  *c);
 char		*ft_strdup(t_data *data, const char *s);
 char		*ft_strdup_special(t_data *data ,const char *s);
 
-char	*get_next_line(int fd);
+char	*get_next_line(t_data *data, int fd);
 
 /*********PARSING***********************************/
 void		get_map(t_data *data, char *argv);

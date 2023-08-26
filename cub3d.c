@@ -6,7 +6,7 @@
 /*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:00:15 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/26 07:38:04 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/26 21:55:20 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,14 @@ void	clean_all(t_data *data, int err)
 		mlx_destroy_window(data->mlx_i->mlx, data->mlx_i->mlx_win);
 	if (data->mlx_i->mlx != NULL)
 		mlx_destroy_display(data->mlx_i->mlx);
+	/*if (data->mlx_i2->img != NULL)
+		mlx_destroy_image(data->mlx_i2->mlx, data->mlx_i2->img);
+	if (data->mlx_i2->mlx_win != NULL)
+		mlx_destroy_window(data->mlx_i2->mlx, data->mlx_i2->mlx_win);
+	if (data->mlx_i2->mlx_win != NULL)
+		mlx_destroy_display(data->mlx_i2->mlx);*/
 	free(data->mlx_i->mlx);
+	//free(data->mlx_i2->mlx);
 	gc_clean(&data->gc);
 	exit(err);
 }

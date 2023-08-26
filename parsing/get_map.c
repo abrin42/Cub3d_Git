@@ -6,7 +6,7 @@
 /*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:16:29 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/26 07:46:41 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/26 07:53:35 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	malloc_map(t_data *data, int fd, char *buff)
 	y = 0;
 	while (buff != NULL)
 	{
-		buff = get_next_line(fd);
+		buff = get_next_line(data, fd);
 		/*if (!buff[0])
 		{
 			printf("this break\n");
@@ -118,7 +118,7 @@ void	open_malloc_map(t_data *data)
 	fd = open(data->path_map , O_RDONLY);
 	while (i == 0 || buff != NULL)
 	{
-		buff = get_next_line(fd);
+		buff = get_next_line(data, fd);
 		//printf("\nbuff[%d]*%s*\n",i,buff);
 		if (ft_strstr(buff, "1111") != 0)
 		{
@@ -167,7 +167,7 @@ void	copy_other_line_map(t_data *data, int fd, char *buff)
 	while (y < data->y_map + y_2)
 	{
 		x = 0;
-		buff = get_next_line(fd);
+		buff = get_next_line(data, fd);
 		if (!buff)
 		{
 			printf("break here\n");
@@ -240,7 +240,7 @@ void transfert_map(t_data *data,int fd)
 	i = 0;
 	while (i == 0 || buff != NULL)
 	{
-		buff = get_next_line(fd);
+		buff = get_next_line(data, fd);
 		if(!buff)
 		{
 			free(buff);

@@ -6,7 +6,7 @@
 /*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 04:10:38 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/26 07:45:57 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/26 22:29:30 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ char	*linecreat(char *stock)
 	return (new);
 }
 
-char	*delstock(char *stock)
+char	*delstock(t_data *data, char *stock)
 {
 	char	*rest;
 	int		i;
 	int		j;
-
+	(void)data;
 	i = 0;
 	while (stock[i] && stock[i] != '\n')
 		i++;
@@ -101,7 +101,7 @@ char	*delstock(char *stock)
 		free(stock);
 		return (NULL);
 	}
-	rest = (char *)malloc(sizeof(char) * ((ft_strlen(stock) - i) + 1));
+	rest = malloc(sizeof(char) * ((ft_strlen(stock) - i) + 1));
 	if (!rest)
 		return (NULL);
 	i++;
@@ -110,22 +110,21 @@ char	*delstock(char *stock)
 		rest[j++] = stock[i++];
 	rest[j] = '\0';
 	free(stock);
-	return (rest);
+	free(rest);
+	return (NULL);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(t_data *data, int fd)
 {
-	static char	*stock[2048];
+	static char	*stock;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 2047)
 		return (NULL);
-	stock[fd] = readfd(stock[fd], fd);
-	if (!stock[fd])
-	{
+	stock = readfd(stock, fd);
+	if (!stock)
 		return (NULL);
-	}
-	line = linecreat(stock[fd]);
-	stock[fd] = delstock (stock[fd]);
+	line = linecreat(stock);
+	stock = delstock (data, stock);
 	return (line);
 }
