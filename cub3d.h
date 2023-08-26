@@ -115,6 +115,7 @@ typedef struct s_data
 	t_gcan	gc;
 	t_ray	*ray_i;
 	t_mlx *mlx_i;
+	t_mlx *mlx_i2;
 	t_map *map_i;
 }	t_data;
 
@@ -154,7 +155,7 @@ void	check_left(t_data *data);
 void	check_up(t_data *data);
 /*********RAYTRACING***********************************/
 int	display(t_data *data);
-
+void	draw_map2D(t_data *data);
 
 
 #endif
