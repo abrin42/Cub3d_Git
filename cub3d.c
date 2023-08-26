@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:00:15 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/25 22:15:59 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/26 02:40:51 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int main(int argc, char **argv)
 	data.mlx_i->img_addr = mlx_get_data_addr(data.mlx_i->img, &(data.mlx_i->bpp), &(data.mlx_i->line_len), &(data.mlx_i->endian));
 	draw_map2D(&data);
 	mlx_key_hook(data.mlx_i->mlx_win, &handle_input, &data);
-	//mlx_hook(data.mlx_i->mlx_win, 17, 1L << 0, handle_mouse, &data);
-	//mlx_expose_hook(data.mlx_i->mlx_win, display, &data);
+	mlx_hook(data.mlx_i->mlx_win, 17, 1L << 0, handle_mouse, &data);
+	mlx_expose_hook(data.mlx_i->mlx_win, display, &data);
 	mlx_loop(data.mlx_i->mlx);
 }

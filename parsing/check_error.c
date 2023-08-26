@@ -28,7 +28,10 @@ int	check_player(t_data *data)
 		while (x < data->x_map)
 		{
 			if (is_players(data->map_i->map[y][x]) == 1)
+			{
+				data->map_i->map[y][x] = '0';
 				player++;
+			}
 			x++;
 		}
 		y++;
@@ -72,13 +75,15 @@ int	check_name(char *argv)
 	{
 		i++;
 	}
-	if (argv[i - 4] != '.' && argv[i - 3] != 'c'
-		&& argv[i - 2] != 'u' && argv[i - 1] != 'b')
+	printf("here argv %s\n", argv);
+	printf("-%c%c%c%c-\n",argv[i - 4], argv[i - 3] , argv[i - 2], argv[i - 1]);
+	if (argv[i - 4] == '.' && argv[i - 3] == 'c'
+		&& argv[i - 2] == 'u' && argv[i - 1] == 'b')
 	{
-		printf("Error : Only .cub files are accepted by the program\n");
-		return (1);
+		return (0);
 	}
-	return (0);
+	printf("Error : Only .cub files are accepted by the program\n");
+	return (1);
 
 }
 
