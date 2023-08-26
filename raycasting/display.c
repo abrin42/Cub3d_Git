@@ -2,14 +2,16 @@
 
 void	draw_player(t_data *data)
 {
-	//(void)data;
-	printf("ICI X : %f et Y : %f\n", data->ray_i->posX, data->ray_i->posY);
-	mlx_pixel_put(data->mlx_i->mlx, data->mlx_i->mlx_win, data->ray_i->posX * 32, data->ray_i->posY * 32, 0xFF0000);
+	int	w;
+	int	h;
+
+	data->mlx_i2->img = mlx_xpm_file_to_image (data->mlx_i2->mlx, "img/red.xpm", &w, &h);
+	mlx_put_image_to_window(data->mlx_i2->mlx, data->mlx_i2->mlx_win, data->mlx_i2->img, data->ray_i->posY * 32, data->ray_i->posX * 32);
 }
 
 void	my_mlx_put(t_data *data, int y, int x)
 {
-	mlx_put_image_to_window(data->mlx_i->mlx, data->mlx_i->mlx_win, data->mlx_i->img, 32 * x, 32 * y);
+	mlx_put_image_to_window(data->mlx_i2->mlx, data->mlx_i2->mlx_win, data->mlx_i2->img, 32 * x, 32 * y);
 }
 
 void	draw_map2D(t_data *data)
@@ -26,15 +28,14 @@ void	draw_map2D(t_data *data)
 		while (y < data->y_map)
 		{
 			if (data->map_i->map[y][x] == '1')
-				data->mlx_i->img = mlx_xpm_file_to_image (data->mlx_i->mlx, "img/white.xpm", &w, &h);
+				data->mlx_i2->img = mlx_xpm_file_to_image (data->mlx_i2->mlx, "img/white.xpm", &w, &h);
 			else if (data->map_i->map[y][x] == '0')
-				data->mlx_i->img = mlx_xpm_file_to_image (data->mlx_i->mlx, "img/grey.xpm", &w, &h);
+				data->mlx_i2->img = mlx_xpm_file_to_image (data->mlx_i2->mlx, "img/grey.xpm", &w, &h);
 			my_mlx_put(data, y, x);
 			y++;
 		}
 		x++;
 	}
-
 }
 
 static void	setup_dda2(t_data *data)
@@ -74,6 +75,42 @@ void	setup_dda(t_data *data)
 	}
 }
 
+static t_texture	*step_x(t_data *data)
+{
+	t_texture	*text;
+
+	text = NULL;
+	data->ray_i->sideDistX += data->ray_i->deltaDistX;
+	data->ray_i->mapX += data->ray_i->stepX;
+	data->ray_i->side = 0;
+	if (data->map_i->map[data->ray_i->mapX][data->ray_i->mapY] != '0')
+	{
+		if (data->ray_i->stepX > 0)
+			text = &(data->map_i->so);
+		else
+			text = &(data->map_i->no);
+	}
+	return(text);
+}
+
+static t_texture	*step_y(t_data *data)
+{
+	t_texture	*text;
+
+	text = NULL;
+	data->ray_i->sideDistY += data->ray_i->deltaDistY;
+	data->ray_i->mapY += data->ray_i->stepY;
+	data->ray_i->side = 1;
+	if (data->map_i->map[data->ray_i->mapX][data->ray_i->mapY] != '0')
+	{
+		if (data->ray_i->stepY > 0)
+			text = &(data->map_i->ea);
+		else
+			text = &(data->map_i->we);
+	}
+	return (text);
+}
+
 t_texture	*dda(t_data *data)
 {
 	t_texture	*text;
@@ -82,17 +119,9 @@ t_texture	*dda(t_data *data)
 	while (text == NULL)
 	{
 		if (data->ray_i->sideDistX < data->ray_i->sideDistY)
-		{
-			data->ray_i->sideDistX += data->ray_i->deltaDistX;
-			data->ray_i->mapX += data->ray_i->stepX;
-			data->ray_i->side = 0;
-		}
+			text = step_x(data);
 		else
-		{
-			data->ray_i->sideDistY += data->ray_i->deltaDistY;
-			data->ray_i->mapY += data->ray_i->stepY;
-			data->ray_i->side = 1;
-		}
+			text = step_y(data);
 	}
 	if (data->ray_i->side == 0)
 		data->ray_i->perpWallDist = data->ray_i->sideDistX - data->ray_i->deltaDistX;
@@ -177,6 +206,7 @@ int	display(t_data *data)
 	int	x;
 
 	x = 0;
+	draw_player(data);
 	while (x < data->ray_i->screen_w)
 	{
 		data->ray_i->cameraX = (2 * (x / (double)data->ray_i->screen_w)) - 1;
@@ -186,7 +216,6 @@ int	display(t_data *data)
 		data->ray_i->mapY = (int)data->ray_i->posY;
 		setup_dda(data);
 		render_line(data, x++);
-		x++;
 	}
 	mlx_put_image_to_window(data->mlx_i->mlx, data->mlx_i->mlx_win, data->mlx_i->img, 0, 0);
 	return (0);
@@ -207,4 +236,6 @@ void	setup_texture2(t_data *data)
 void	setup_texture(t_data *data)
 {
 	setup_texture2(data);
+	data->map_i->cell_color = data->map_i->C[0] * 256 * 256 + data->map_i->C[1] * 256 + data->map_i->C[2];
+	data->map_i->floor_color = data->map_i->F[0] * 256 *256 + data->map_i->F[1] * 256  + data->map_i->F[2];
 }

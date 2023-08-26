@@ -6,7 +6,7 @@
 /*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 19:35:25 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/25 00:48:37 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/26 00:57:08 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct s_data
 	t_gcan	gc;
 	t_ray	*ray_i;
 	t_mlx *mlx_i;
+	t_mlx *mlx_i2;
 	t_map *map_i;
 }	t_data;
 
@@ -151,7 +152,7 @@ void	check_left(t_data *data);
 void	check_up(t_data *data);
 /*********RAYTRACING***********************************/
 int	display(t_data *data);
-
+void	draw_map2D(t_data *data);
 
 
 #endif
