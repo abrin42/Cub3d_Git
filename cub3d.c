@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:00:15 by abrin             #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2023/08/26 02:40:51 by abrin            ###   ########.fr       */
+=======
+/*   Updated: 2023/08/26 02:27:53 by tmarie           ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +70,6 @@ int	handle_input(int key, t_data *data)
 
 	if (key == 65307)
 	{
-		mlx_destroy_window(data->mlx_i->mlx, data->mlx_i->mlx_win);
 		gc_clean(&data->gc);
 		exit(0);
 	}
