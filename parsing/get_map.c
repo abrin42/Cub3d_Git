@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:16:29 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/26 02:45:19 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/26 07:46:41 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,17 @@ void	open_malloc_map(t_data *data)
 
 void	check_character(t_data *data, char pos, int x, int y)
 {
-	if (pos == 'N' || pos == 'S' || pos == 'E' || pos == 'O')
+
+	if (pos == 'N' || pos == 'S' || pos == 'E' || pos == 'W')
 	{
-		data->ray_i->posX = x;
-		data->ray_i->posY = y;
+		if (pos == 'S')
+			rotate_player(data, 3.141592);
+		else if (pos == 'E')
+			rotate_player(data, -1.57);
+		else if (pos == 'W')
+			rotate_player(data, 1.57);
+		data->ray_i->posX = y;
+		data->ray_i->posY = x;
 	}
 }
 
@@ -161,7 +168,6 @@ void	copy_other_line_map(t_data *data, int fd, char *buff)
 	{
 		x = 0;
 		buff = get_next_line(fd);
-		//printf("buff fee%s\n",buff);
 		if (!buff)
 		{
 			printf("break here\n");
@@ -183,7 +189,6 @@ void	copy_other_line_map(t_data *data, int fd, char *buff)
 		}
 		free(buff);
 	}
-	printf("buff fee%s\n",buff);
 	//data->map_i->trace++;
 }
 
@@ -247,7 +252,6 @@ void transfert_map(t_data *data,int fd)
 			free(buff);
 			break;
 		}
-		printf("next step \n");
 		i++;
 		free(buff);
 

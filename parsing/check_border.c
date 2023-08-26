@@ -6,7 +6,7 @@
 /*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 03:36:14 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/25 02:03:52 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/26 07:09:08 by tmarie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	malloc_copy_map(t_data *data)
 
 	y = 0;
 	data->map_i->copy_map = gc_malloc(&data->gc ,sizeof(char *) * data->y_map + 3);
-	while (y < data->y_map)
+	while (y < data->y_map + 1)
 	{
 		data->map_i->copy_map[y] =gc_malloc(&data->gc, sizeof(char) * data->x_map + 2);
 		y++;
@@ -42,29 +42,29 @@ void	copy_map(t_data *data)
 		data->map_i->copy_map[y + 1] = ft_strdup_special(data, data->map_i->map[y]);
 		y++;
 	}
-	data->map_i->copy_map[y + 1] = ft_strdup(data, data->map_i->copy_map[0]);
+	//data->map_i->copy_map[y + 1] = ft_strdup(data, data->map_i->copy_map[0]);
 }
 
 void	check_exit(t_data *data)
 {
-	if(data->map_i->copy_map[data->map_i->y_wall][data->map_i->x_wall + 1] == '4')
+	if(data->map_i->copy_map[data->map_i->x_wall + 1][data->map_i->y_wall] == '4')
 		data->map_i->map_error++;
-	if(data->map_i->copy_map[data->map_i->y_wall][data->map_i->x_wall - 1] == '4')
+	if(data->map_i->copy_map[data->map_i->x_wall - 1][data->map_i->y_wall] == '4')
 		data->map_i->map_error++;
-	if(data->map_i->copy_map[data->map_i->y_wall + 1][data->map_i->x_wall] == '4')
+	if(data->map_i->copy_map[data->map_i->x_wall][data->map_i->y_wall + 1] == '4')
 		data->map_i->map_error++;
-	if(data->map_i->copy_map[data->map_i->y_wall - 1][data->map_i->x_wall] == '4')
+	if(data->map_i->copy_map[data->map_i->x_wall][data->map_i->y_wall - 1] == '4')
 		data->map_i->map_error++;
 }
 
 void	check_right(t_data *data)
 {
 	check_exit(data);
-	if (data->map_i->copy_map[data->map_i->y_wall][data->map_i->x_wall + 1] == '0'
-		|| data->map_i->copy_map[data->map_i->y_wall][data->map_i->x_wall + 1] == ' ')
+	if (data->map_i->copy_map[data->map_i->x_wall + 1][data->map_i->y_wall] == '0'
+		|| data->map_i->copy_map[data->map_i->x_wall + 1][data->map_i->y_wall] == ' ')
 	{
 		data->map_i->x_wall++;
-		data->map_i->copy_map[data->map_i->y_wall][data->map_i->x_wall] = '2';
+		data->map_i->copy_map[data->map_i->x_wall][data->map_i->y_wall] = '2';
 		check_right(data);
 		data->map_i->x_wall--;
 	}
@@ -74,11 +74,11 @@ void	check_right(t_data *data)
 void	check_down(t_data *data)
 {
 	check_exit(data);
-	if (data->map_i->copy_map[data->map_i->y_wall + 1][data->map_i->x_wall] == '0'
-		|| data->map_i->copy_map[data->map_i->y_wall + 1][data->map_i->x_wall] == ' ')
+	if (data->map_i->copy_map[data->map_i->x_wall][data->map_i->y_wall + 1] == '0'
+		|| data->map_i->copy_map[data->map_i->x_wall][data->map_i->y_wall + 1] == ' ')
 	{
 		data->map_i->y_wall++;
-		data->map_i->copy_map[data->map_i->y_wall][data->map_i->x_wall] = '2';
+		data->map_i->copy_map[data->map_i->x_wall][data->map_i->y_wall] = '2';
 		check_right(data);
 		data->map_i->y_wall--;
 	}
@@ -88,11 +88,11 @@ void	check_down(t_data *data)
 void	check_left(t_data *data)
 {
 	check_exit(data);
-	if (data->map_i->copy_map[data->map_i->y_wall][data->map_i->x_wall - 1] == '0'
-		|| data->map_i->copy_map[data->map_i->y_wall][data->map_i->x_wall - 1] == ' ')
+	if (data->map_i->copy_map[data->map_i->x_wall - 1][data->map_i->y_wall] == '0'
+		|| data->map_i->copy_map[data->map_i->x_wall - 1][data->map_i->y_wall] == ' ')
 	{
 		data->map_i->x_wall--;
-		data->map_i->copy_map[data->map_i->y_wall][data->map_i->x_wall] = '2';
+		data->map_i->copy_map[data->map_i->x_wall][data->map_i->y_wall] = '2';
 		check_right(data);
 		data->map_i->x_wall++;
 	}
@@ -102,11 +102,11 @@ void	check_left(t_data *data)
 void	check_up(t_data *data)
 {
 	check_exit(data);
-	if (data->map_i->copy_map[data->map_i->y_wall - 1][data->map_i->x_wall] == '0'
-		|| data->map_i->copy_map[data->map_i->y_wall - 1][data->map_i->x_wall] == ' ')
+	if (data->map_i->copy_map[data->map_i->x_wall][data->map_i->y_wall - 1] == '0'
+		|| data->map_i->copy_map[data->map_i->x_wall][data->map_i->y_wall - 1] == ' ')
 	{
 		data->map_i->y_wall--;
-		data->map_i->copy_map[data->map_i->y_wall][data->map_i->x_wall] = '2';
+		data->map_i->copy_map[data->map_i->x_wall][data->map_i->y_wall] = '2';
 		check_right(data);
 		data->map_i->y_wall++;
 	}
@@ -129,7 +129,11 @@ int	check_border_map(t_data *data)
 		printf("Error : Too many players on the map (N, S , E, W)\n");
 		return(1);
 	}
-	check_right(data);
+	/*for (size_t i = 0; i < 16; i++)
+	{
+		printf("%s\n", data->map_i->copy_map[i]);
+	}*/
+	//check_right(data);
 	if (data->map_i->map_error != 0)
 	{
 		printf("Error : The map is not closed\n");

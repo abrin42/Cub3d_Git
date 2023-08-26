@@ -206,14 +206,14 @@ int	display(t_data *data)
 	int	x;
 
 	x = 0;
-	draw_player(data);
+	//draw_player(data);
 	while (x < data->ray_i->screen_w)
 	{
 		data->ray_i->cameraX = (2 * (x / (double)data->ray_i->screen_w)) - 1;
 		data->ray_i->rayDirX = data->ray_i->dirX + data->ray_i->planeX * data->ray_i->cameraX;
 		data->ray_i->rayDirY = data->ray_i->dirY + data->ray_i->planeY * data->ray_i->cameraX;
-		data->ray_i->mapX = (int)data->ray_i->posX;
 		data->ray_i->mapY = (int)data->ray_i->posY;
+		data->ray_i->mapX = (int)data->ray_i->posX;
 		setup_dda(data);
 		render_line(data, x++);
 	}
