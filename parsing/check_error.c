@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 00:23:29 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/27 03:43:11 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/27 04:43:44 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ int	check_texture(t_data *data)
 	int	error;
 
 	error = 0;
-	if (!data->map_i->no1)
+	if (!data->map_i->no1 || (open(data->map_i->no1,O_RDONLY) == -1))
 		error++;
-	if (!data->map_i->so1)
+	if (!data->map_i->so1 || (open(data->map_i->so1,O_RDONLY) == -1))
 		error++;
-	if (!data->map_i->we1)
+	if (!data->map_i->we1 || (open(data->map_i->we1,O_RDONLY) == -1))
 		error++;
-	if (!data->map_i->ea1)
+	if (!data->map_i->ea1 || (open(data->map_i->ea1,O_RDONLY) == -1))
 		error++;
 	if (!data->map_i->f1)
 		error++;
@@ -58,7 +58,7 @@ int	check_texture(t_data *data)
 	if (error != 0)
 	{
 		printf("Error : In the file map.cub not all ");
-		printf("textures are defined (example \"NO ");
+		printf("textures are defined correctly (example \"NO ");
 		printf("./path_to_the_north_texture\", same ");
 		printf("with SO, WE, EA and \"F 220,100,\" same with C) \n");
 		return (1);
