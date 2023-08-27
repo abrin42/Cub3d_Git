@@ -1,61 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_error.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/27 00:23:29 by abrin             #+#    #+#             */
+/*   Updated: 2023/08/27 02:43:44 by abrin            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	is_players(char c)
+int	check_player(t_data *data)
 {
-	if(c == 'N')
-		return(1);
-	else if (c == 'S')
-		return(1);
-	else if (c == 'E')
-		return(1);
-	else if (c == 'W')
-		return(1);
-	return(0);
-}
+	int	y;
+	int	x;
+	int	player;
 
-int    check_player(t_data *data)
-{
-    int y;
-    int x;
-    int player;
-
-    player = 0;
-    y = 0;
-    while (y < data->y_map - 1)
-    {
-        x = 0;
-        while (data->map_i->map[y][x] && x < data->x_map)
-        {
-            if (data->map_i->map[y][x] && is_players(data->map_i->map[y][x]) == 1)
-            {
-                data->map_i->map[y][x] = '0';
-                player++;
-            }
-            x++;
-        }
-        y++;
-    }
-    return(player);
-
+	player = 0;
+	y = 0;
+	while (y < data->y_map - 1)
+	{
+		x = 0;
+		while (data->map_i->map[y][x] && x < data->x_map)
+		{
+			if (data->map_i->map[y][x] && is_players
+				(data->map_i->map[y][x]) == 1)
+			{
+				data->map_i->map[y][x] = '0';
+				player++;
+			}
+			x++;
+		}
+		y++;
+	}
+	return (player);
 }
 
 int	check_texture(t_data *data)
 {
-	int error;
+	int	error;
 
 	error = 0;
-	if (!data->map_i->NO)
+	if (!data->map_i->no1)
 		error++;
-	if (!data->map_i->SO)
+	if (!data->map_i->so1)
 		error++;
-	if (!data->map_i->WE)
+	if (!data->map_i->we1)
 		error++;
-	if (!data->map_i->EA)
+	if (!data->map_i->ea1)
 		error++;
-	if (!data->map_i->F)
+	if (!data->map_i->f1)
 		error++;
-	if (!data->map_i->C)
+	if (!data->map_i->c1)
 		error++;
 	if (error != 0)
 	{
@@ -63,13 +61,14 @@ int	check_texture(t_data *data)
 		printf("textures are defined (example \"NO ");
 		printf("./path_to_the_north_texture\", same ");
 		printf("with SO, WE, EA and \"F 220,100,\" same with C) \n");
-		return(1);
+		return (1);
 	}
 	return (0);
 }
+
 int	check_name(char *argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (argv[i])
@@ -77,7 +76,7 @@ int	check_name(char *argv)
 		i++;
 	}
 	printf("here argv %s\n", argv);
-	printf("-%c%c%c%c-\n",argv[i - 4], argv[i - 3] , argv[i - 2], argv[i - 1]);
+	printf("-%c%c%c%c-\n", argv[i - 4], argv[i - 3], argv[i - 2], argv[i - 1]);
 	if (argv[i - 4] == '.' && argv[i - 3] == 'c'
 		&& argv[i - 2] == 'u' && argv[i - 1] == 'b')
 	{
@@ -85,39 +84,38 @@ int	check_name(char *argv)
 	}
 	printf("Error : Only .cub files are accepted by the program\n");
 	return (1);
-
 }
 
-int check_xpm(t_data *data)
+int	check_xpm(t_data *data)
 {
-	int error;
+	int	error;
 
 	error = 0;
-	if (ft_strnrchr(data->map_i->NO, ".xpm") != 1)
+	if (ft_strnrchr(data->map_i->no1, ".xpm") != 1)
 		error++;
-	if (ft_strnrchr(data->map_i->SO, ".xpm") != 1)
+	if (ft_strnrchr(data->map_i->so1, ".xpm") != 1)
 		error++;
-	if (ft_strnrchr(data->map_i->EA, ".xpm") != 1)
+	if (ft_strnrchr(data->map_i->ea1, ".xpm") != 1)
 		error++;
-	if (ft_strnrchr(data->map_i->WE, ".xpm") != 1)
+	if (ft_strnrchr(data->map_i->we1, ".xpm") != 1)
 		error++;
 	if (error != 0)
 	{
 		printf("Error : Textures must be in .xpm format\n");
-		return(1);
+		return (1);
 	}
 	return (0);
 }
 
-int check_error(t_data *data, char *argv)
+int	check_error(t_data *data, char *argv)
 {
 	if (check_border_map(data) == 1)
-		return(1);
+		return (1);
 	if (check_texture(data) == 1)
-		return(1);
+		return (1);
 	if (check_name(argv) == 1)
-		return(1);
-	if(check_xpm(data) == 1)
-		return(1);
+		return (1);
+	if (check_xpm(data) == 1)
+		return (1);
 	return (0);
 }

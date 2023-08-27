@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarie <tmarie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 04:10:38 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/26 22:53:47 by tmarie           ###   ########.fr       */
+/*   Updated: 2023/08/27 02:21:31 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ char	*linecreat(char *stock)
 		new[i] = stock[i];
 		i++;
 	}
-	//new[i] = stock[i];
 	new[i] = '\0';
 	return (new);
 }
@@ -92,6 +91,7 @@ char	*delstock(t_data *data, char *stock)
 	char	*rest;
 	int		i;
 	int		j;
+
 	(void)data;
 	i = 0;
 	while (stock[i] && stock[i] != '\n')
