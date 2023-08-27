@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 00:23:29 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/27 02:43:44 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/27 03:43:11 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ int	check_name(char *argv)
 	{
 		i++;
 	}
-	printf("here argv %s\n", argv);
-	printf("-%c%c%c%c-\n", argv[i - 4], argv[i - 3], argv[i - 2], argv[i - 1]);
 	if (argv[i - 4] == '.' && argv[i - 3] == 'c'
 		&& argv[i - 2] == 'u' && argv[i - 1] == 'b')
 	{
@@ -117,5 +115,11 @@ int	check_error(t_data *data, char *argv)
 		return (1);
 	if (check_xpm(data) == 1)
 		return (1);
+	check_right(data);
+	if (data->map_i->map_error != 0)
+	{
+		printf("Error : the map is not closed\n");
+		return (1);
+	}
 	return (0);
 }

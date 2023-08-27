@@ -6,7 +6,7 @@
 /*   By: abrin <abrin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 03:00:15 by abrin             #+#    #+#             */
-/*   Updated: 2023/08/27 03:30:02 by abrin            ###   ########.fr       */
+/*   Updated: 2023/08/27 04:13:31 by abrin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	(void)argc;
+	if (argc != 2)
+		return(-1);
 	gc_init(&data.gc);
 	init(&data);
 	data.mlx_i->mlx = mlx_init();
